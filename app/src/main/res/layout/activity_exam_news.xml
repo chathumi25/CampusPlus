@@ -47,7 +47,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Sports News"
+        android:text="Exame News"
         android:textSize="24sp"
         android:textStyle="bold"
         android:gravity="center"
@@ -67,8 +67,8 @@
             android:orientation="vertical">
 
             <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:contentDescription="News Image"
                 android:scaleType="centerCrop"
                 android:src="@drawable/exams" />
@@ -77,7 +77,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#456F84"
-                android:text="Faculty football tournament finals held today.\nApril.30.2024\nThe Inter-Faculty Football Tournament final was held today the university ground."
+                android:text="FSemester 2 Final Exam Timetable Released\nApril.30.2024\nTheFinal exams will start on May 10 and end on May 24. "
                 android:textColor="#ffffff"
                 android:padding="10dp"
                 android:textSize="14sp"/>
@@ -115,23 +115,16 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="The finals of the Inter-Faculty Football Tournament were held at the university ground today. The Engineering Faculty defeated the Business Faculty with a final score of 3-1. The match was attended by over 500 students and faculty members."
+                android:text="
+Date: April 29, 2025
+ Author: Campus Administration Office
+
+The final examination timetable for Semester 2 has been officially released today. The schedule is now available on the university portal for all undergraduate and postgraduate programs. Students are advised to review their exam dates carefully and make necessary preparations."
                 android:textColor="#fff"
                 android:textSize="15sp"/>
         </LinearLayout>
     </ScrollView>
 
     <!-- Bottom Interaction -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:background="#1A2D36">
-
-
-
-
-    </LinearLayout>
 
 </LinearLayout>

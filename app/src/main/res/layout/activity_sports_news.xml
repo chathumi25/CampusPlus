@@ -67,8 +67,8 @@
             android:orientation="vertical">
 
             <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:contentDescription="News Image"
                 android:scaleType="centerCrop"
                 android:src="@drawable/sports" />
@@ -122,16 +122,5 @@
     </ScrollView>
 
     <!-- Bottom Interaction -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:background="#1A2D36">
-
-
-
-
-    </LinearLayout>
 
 </LinearLayout>
