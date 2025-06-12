@@ -49,7 +49,7 @@ public class SignupActivity extends AppCompatActivity {
                     if (cbSaveData.isChecked()) {
                         saveUserData(username, email, password);
                     }
-                    startActivity(new Intent(SignupActivity.this, NewsActivity.class));
+                    startActivity(new Intent(SignupActivity.this, NewsMainActivity.class));
                     finish();
                 }
             }

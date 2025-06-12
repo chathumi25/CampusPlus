@@ -4,5 +4,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="nav_icon_color">#FFFFFF</color>
     <color name="nav_text_color">#FFFFFF</color>
+    <color name="hintColor">#00BCD4</color>
 
 </resources>

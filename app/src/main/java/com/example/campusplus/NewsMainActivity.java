@@ -62,21 +62,6 @@ public class NewsMainActivity extends AppCompatActivity {
             startActivity(new Intent(this, FacultyNewsActivity.class));
         });
 
-        // Bottom Navigation
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
-        bottomNavigationView.setOnItemSelectedListener(item -> {
-            switch (item.getItemId()) {
-                case R.id.nav_sports:
-                    startActivity(new Intent(this, SportsNewsActivity.class));
-                    return true;
-                case R.id.nav_academic:
-                    startActivity(new Intent(this,FacultyNewsActivity.class));
-                    return true;
-                case R.id.nav_exam:
-                    startActivity(new Intent(this, ExamNewsActivity.class));
-                    return true;
-            }
-            return false;
-        });
+
     }
 }

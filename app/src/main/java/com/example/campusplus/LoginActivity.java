@@ -53,7 +53,7 @@ public class LoginActivity extends AppCompatActivity {
             // TODO: Optional - validate credentials before proceeding
 
             // Move to NewsActivity
-            Intent intent = new Intent(LoginActivity.this, NewsActivity.class);
+            Intent intent = new Intent(LoginActivity.this, NewsMainActivity.class);
             startActivity(intent);
             finish();
         });
