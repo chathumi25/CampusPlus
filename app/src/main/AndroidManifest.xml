@@ -1,33 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.campusplus">
 
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/cp"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplicationSample"
         tools:targetApi="31">
 
+        <!-- Splash Screen: Launcher Activity -->
         <activity
-            android:name="com.example.campusplus.SplashScreen"
+            android:name=".SplashScreen"
             android:exported="true"
             android:theme="@style/SplashScreen">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
+        <!-- Login Activity -->
+        <activity
+            android:name=".LoginActivity"
+            android:exported="false" />
+
+        <!-- Signup Activity -->
         <activity
             android:name=".SignupActivity"
             android:exported="false" />
+
+        <!-- News Main Activity -->
+        <activity
+            android:name=".NewsMainActivity"
+            android:exported="false" />
+
+        <!-- Profile Activity (optional) -->
+        <activity
+            android:name=".ProfileActivity"
+            android:exported="false" />
+
+        <!-- Example additional news sections (optional) -->
+        <activity
+            android:name=".SportsNewsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ExamNewsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".FacultyNewsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SignupActivity"
+            android:exported="false" />
+
 
     </application>
 

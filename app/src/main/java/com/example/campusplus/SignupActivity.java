@@ -1,6 +1,5 @@
 package com.example.campusplus;
 
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -12,8 +11,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
-
-
 
 public class SignupActivity extends AppCompatActivity {
 
@@ -34,7 +31,7 @@ public class SignupActivity extends AppCompatActivity {
         etEmail = findViewById(R.id.et_email);
         cbSaveData = findViewById(R.id.cb_save_data);
         btnSignUp = findViewById(R.id.btnLogin);
-
+        tvAlreadyAccount = findViewById(R.id.tv_already_account); // ✅ FIXED
 
         // SignUp Button Click
         btnSignUp.setOnClickListener(new View.OnClickListener() {
@@ -93,4 +90,3 @@ public class SignupActivity extends AppCompatActivity {
         editor.apply();
     }
 }
-
