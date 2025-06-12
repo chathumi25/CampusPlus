@@ -1,20 +1,16 @@
 package com.example.campusplus;
 
-
 import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-
 public class DeveloperActivity extends AppCompatActivity {
 
-    Button exitButton;
+    private Button exitButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,9 +27,10 @@ public class DeveloperActivity extends AppCompatActivity {
                 .setTitle("Log Out and Exit")
                 .setMessage("Are you sure you want to log out and exit the app?")
                 .setPositiveButton("Yes", (dialog, which) -> {
-                    logoutUser();  // clear user data
-                    finishAffinity(); // close all activities
-                    System.exit(0);   // exit app
+                    logoutUser();      // Clear user session data
+                    finishAffinity();  // Close all activities and exit app
+
+                    // System.exit(0); // Optional: can be used but not always recommended
                 })
                 .setNegativeButton("Cancel", null)
                 .show();
@@ -43,7 +40,7 @@ public class DeveloperActivity extends AppCompatActivity {
         // Clear SharedPreferences or session data here
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = preferences.edit();
-        editor.clear(); // or editor.remove("key") for specific logout data
+        editor.clear(); // Clear all stored preferences, you can selectively remove keys instead
         editor.apply();
     }
 }

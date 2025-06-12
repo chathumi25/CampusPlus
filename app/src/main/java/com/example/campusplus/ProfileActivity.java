@@ -25,7 +25,6 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile_main); // Keep original layout
 
-        // These views must be present inside news_main.xml
         profileImage = findViewById(R.id.profile_image);
         backButton = findViewById(R.id.backButton);
         editProfile = findViewById(R.id.edit_profile);
@@ -42,6 +41,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         if (editProfile != null) {
             editProfile.setOnClickListener(v -> {
+                // Already opens EditProfileActivity
                 Intent intent = new Intent(ProfileActivity.this, EditProfileActivity.class);
                 startActivity(intent);
             });
@@ -56,8 +56,9 @@ public class ProfileActivity extends AppCompatActivity {
 
         if (help != null) {
             help.setOnClickListener(v -> {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://help.com"));
-                startActivity(browserIntent);
+                // Changed from opening URL to opening DeveloperActivity screen
+                Intent intent = new Intent(ProfileActivity.this, DeveloperActivity.class);
+                startActivity(intent);
             });
         }
 

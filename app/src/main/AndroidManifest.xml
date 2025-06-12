@@ -54,6 +54,11 @@
             android:name=".ProfileActivity"
             android:exported="false" />
 
+        <activity android:name=".DeveloperActivity"
+            android:exported="false" />
+        <activity android:name=".EditProfileActivity"
+            android:exported="false" />/>
+
     </application>
 
 </manifest>
