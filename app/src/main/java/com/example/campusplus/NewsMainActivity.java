@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 public class NewsMainActivity extends AppCompatActivity {
 
     private EditText searchBar;
@@ -29,7 +31,7 @@ public class NewsMainActivity extends AppCompatActivity {
         sportsNewsCard = findViewById(R.id.sports_card);
         examNewsCard = findViewById(R.id.exam_card);
         academicNewsCard = findViewById(R.id.academic_card);
-        btnLogout = findViewById(R.id.btnLogout); // NEW
+        btnLogout = findViewById(R.id.btnLogout);
 
         // Open profile
         profileIcon.setOnClickListener(v -> {
@@ -57,5 +59,24 @@ public class NewsMainActivity extends AppCompatActivity {
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Clear back stack
             startActivity(intent);
         });
+
+        BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
+        bottomNav.setOnItemSelectedListener(item -> {
+            int id = item.getItemId();
+
+            if (id == R.id.nav_sports) {
+                startActivity(new Intent(NewsMainActivity.this, SportsNewsActivity.class));
+                return true;
+            } else if (id == R.id.nav_academic) {
+                startActivity(new Intent(NewsMainActivity.this, FacultyNewsActivity.class));
+                return true;
+            } else if (id == R.id.nav_exam) {
+                startActivity(new Intent(NewsMainActivity.this, ExamNewsActivity.class));
+                return true;
+            }
+
+            return false;
+        });
+
     }
 }

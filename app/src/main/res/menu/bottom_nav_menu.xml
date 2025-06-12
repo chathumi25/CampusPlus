@@ -7,7 +7,7 @@
     <item
         android:id="@+id/nav_academic"
         android:icon="@drawable/academic"
-        android:title="Academic" />
+        android:title="Faculty" />
     <item
         android:id="@+id/nav_exam"
         android:icon="@drawable/exam"
