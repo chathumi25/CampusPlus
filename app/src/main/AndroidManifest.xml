@@ -35,17 +35,10 @@
             android:name=".SignupActivity"
             android:exported="false" />
 
-        <!-- News Main Activity -->
+        <!-- News Activities -->
         <activity
             android:name=".NewsMainActivity"
             android:exported="false" />
-
-        <!-- Profile Activity (optional) -->
-        <activity
-            android:name=".ProfileActivity"
-            android:exported="false" />
-
-        <!-- Example additional news sections (optional) -->
         <activity
             android:name=".SportsNewsActivity"
             android:exported="false" />
@@ -55,10 +48,11 @@
         <activity
             android:name=".FacultyNewsActivity"
             android:exported="false" />
-        <activity
-            android:name=".SignupActivity"
-            android:exported="false" />
 
+        <!-- Profile Activity -->
+        <activity
+            android:name=".ProfileActivity"
+            android:exported="false" />
 
     </application>
 

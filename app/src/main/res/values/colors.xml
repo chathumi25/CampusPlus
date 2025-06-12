@@ -5,5 +5,7 @@
     <color name="nav_icon_color">#FFFFFF</color>
     <color name="nav_text_color">#FFFFFF</color>
     <color name="hintColor">#00BCD4</color>
+    <color name="blue_koi">#5CA6B2</color>
+
 
 </resources>

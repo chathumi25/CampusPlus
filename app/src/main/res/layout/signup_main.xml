@@ -19,7 +19,7 @@
             android:layout_marginBottom="24dp"
             android:gravity="center"
             android:text="Register"
-            android:textColor="#FFFFFF"
+            android:textColor="#CFE8F2"
             android:textSize="32sp"
             android:textStyle="bold" />
 

@@ -10,56 +10,60 @@
         android:orientation="vertical"
         android:padding="24dp">
 
+
         <TextView
-            android:layout_width="wrap_content"
+
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Log in"
-            android:textSize="18sp"
-            android:textColor="#FFFFFF"
             android:layout_marginTop="32dp"
-            android:layout_gravity="center_horizontal" />
+            android:layout_marginBottom="24dp"
+            android:gravity="center"
+            android:text="Login"
+            android:textColor="#CFE8F2"
+            android:textSize="32sp"
+            android:textStyle="bold" />
 
         <!-- Username -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_marginTop="24dp"
             android:background="#4A6D75"
+            android:orientation="horizontal"
             android:padding="12dp">
 
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:src="@drawable/profile"/>
+                android:src="@drawable/profile" />
 
             <EditText
                 android:id="@+id/etUsername"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:hint="User Name / Email"
-                android:textColor="#00BCD4"
-                android:textColorHint="#D3ECF6"
                 android:background="@android:color/transparent"
+                android:hint="User Name / Email"
+                android:inputType="textEmailAddress"
                 android:paddingStart="8dp"
-                android:inputType="textEmailAddress" />
+                android:textColor="#00BCD4"
+                android:textColorHint="#D3ECF6" />
         </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
             android:text="*Required"
             android:textColor="#88c0d0"
-            android:textSize="12sp"
-            android:layout_marginTop="4dp" />
+            android:textSize="12sp" />
 
         <!-- Password -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_marginTop="16dp"
             android:background="#4A6D75"
+            android:orientation="horizontal"
             android:padding="12dp">
 
             <ImageView
@@ -71,30 +75,30 @@
                 android:id="@+id/etPassword"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:hint="Password"
-                android:textColor="#FFFFFF"
-                android:textColorHint="#CCCCCC"
                 android:background="@android:color/transparent"
+                android:hint="Password"
+                android:inputType="textPassword"
                 android:paddingStart="8dp"
-                android:inputType="textPassword" />
+                android:textColor="#FFFFFF"
+                android:textColorHint="#CFE8F2" />
         </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
             android:text="*Required"
             android:textColor="#88c0d0"
-            android:textSize="12sp"
-            android:layout_marginTop="4dp" />
+            android:textSize="12sp" />
 
         <!-- Save Data Checkbox -->
         <CheckBox
             android:id="@+id/checkboxSaveData"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="26dp"
             android:text="Save Data"
-            android:textColor="#FFFFFF"
-            android:layout_marginTop="26dp" />
+            android:textColor="#FFFFFF" />
 
         <!-- Login Button -->
         <Button
@@ -102,18 +106,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
+            android:background="@drawable/btn_login_bg"
             android:text="LOGIN"
-            android:background="#5CA6B2"
             android:textColor="#091215" />
+
 
         <!-- Social Media Icons -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
             android:layout_marginTop="24dp"
-            android:layout_marginBottom="16dp">
+            android:layout_marginBottom="16dp"
+            android:gravity="center"
+            android:orientation="horizontal">
 
             <ImageView
                 android:id="@+id/facebook"

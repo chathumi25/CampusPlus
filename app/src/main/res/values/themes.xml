@@ -1,15 +1,29 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- Base application theme. -->
+    <!-- Base application theme using Material3 -->
     <style name="Base.Theme.MyApplicationSample" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <!-- Optional: Set default colorPrimary to match your blue -->
+        <item name="colorPrimary">@color/blue_koi</item>
+        <item name="colorSecondary">@color/blue_koi</item>
+        <item name="colorPrimaryContainer">@color/blue_koi</item>
+
+        <!-- Optional: Remove button default tinting -->
+        <item name="android:buttonStyle">@style/CustomButton</item>
     </style>
 
+    <!-- App theme -->
     <style name="Theme.MyApplicationSample" parent="Base.Theme.MyApplicationSample" />
+
+    <!-- Splash Screen theme -->
     <style name="SplashScreen" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="android:windowBackground">@drawable/backgroundsplashscreen</item>
         <item name="android:statusBarColor" tools:targetApi="l">#203445</item>
+    </style>
+
+    <!-- Custom button style to remove Material tint -->
+    <style name="CustomButton" parent="Widget.AppCompat.Button">
+        <item name="android:background">@drawable/btn_login_bg</item> <!-- use your custom drawable -->
+        <item name="android:textColor">#091215</item>
     </style>
 
 </resources>
