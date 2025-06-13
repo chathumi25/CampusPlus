@@ -14,6 +14,22 @@
         android:gravity="center_horizontal">
 
         <!-- Header -->
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/backButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="12dp"
+                android:contentDescription="Back"
+                android:src="@drawable/backicon" />
+        </RelativeLayout>
+
+
         <TextView
             android:id="@+id/edit_profile_title"
             android:layout_width="wrap_content"
