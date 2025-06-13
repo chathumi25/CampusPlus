@@ -9,6 +9,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -69,6 +70,27 @@ public class LoginActivity extends AppCompatActivity {
 
         signUp.setOnClickListener(v -> {
             Intent intent = new Intent(LoginActivity.this, SignupActivity.class);
+            startActivity(intent);
+        });
+
+        // Social media image click handling
+        findViewById(R.id.facebook).setOnClickListener(v -> {
+            Intent intent = new Intent(LoginActivity.this, FbActivity.class);
+            startActivity(intent);
+        });
+
+        findViewById(R.id.twitter).setOnClickListener(v -> {
+            Intent intent = new Intent(LoginActivity.this, TwitterActivity.class);
+            startActivity(intent);
+        });
+
+        findViewById(R.id.google).setOnClickListener(v -> {
+            Intent intent = new Intent(LoginActivity.this, GoogleActivity.class);
+            startActivity(intent);
+        });
+
+        findViewById(R.id.apple).setOnClickListener(v -> {
+            Intent intent = new Intent(LoginActivity.this, AppleActivity.class);
             startActivity(intent);
         });
     }
