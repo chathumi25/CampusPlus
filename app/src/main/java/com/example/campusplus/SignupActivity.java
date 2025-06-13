@@ -30,7 +30,7 @@ public class SignupActivity extends AppCompatActivity {
         etConfirmPassword = findViewById(R.id.et_confirm_password);
         etEmail = findViewById(R.id.et_email);
         cbSaveData = findViewById(R.id.cb_save_data);
-        btnSignUp = findViewById(R.id.btnLogin);
+        btnSignUp = findViewById(R.id.btnSignUp);
         tvAlreadyAccount = findViewById(R.id.tv_already_account); // ✅ FIXED
 
         // SignUp Button Click
@@ -41,6 +41,33 @@ public class SignupActivity extends AppCompatActivity {
                 String password = etPassword.getText().toString().trim();
                 String confirmPassword = etConfirmPassword.getText().toString().trim();
                 String email = etEmail.getText().toString().trim();
+
+                if (email.isEmpty()) {
+                    etEmail.setError("Email required");
+                    return;
+                }
+
+                if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                    etEmail.setError("Invalid email address");
+                    return;
+                }
+
+                if (confirmPassword.isEmpty()) {
+                    etConfirmPassword.setError("Confirm Password required");
+                    return;
+                }
+
+                if (!password.equals(confirmPassword)) {
+                    etConfirmPassword.setError("Passwords do not match");
+                    return;
+                }
+                if (username.isEmpty()) {
+                    etUsername.setError("Username required");
+                    return;
+                }
+
+
+
 
                 if (validateInputs(username, password, confirmPassword, email)) {
                     if (cbSaveData.isChecked()) {

@@ -23,78 +23,89 @@ public class LoginActivity extends AppCompatActivity {
     Button btnLogin;
     TextView signUp;
 
-    DatabaseReference databaseReference; // Firebase DB reference
+    DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_main);
 
-        // Initialize views
+        // Bind views
         etUsername = findViewById(R.id.etUsername);
         etPassword = findViewById(R.id.etPassword);
         checkboxSaveData = findViewById(R.id.checkboxSaveData);
         btnLogin = findViewById(R.id.btnLogin);
         signUp = findViewById(R.id.signUp);
 
-        // Firebase reference to "users" node
+        // Initialize Firebase reference
         databaseReference = FirebaseDatabase.getInstance().getReference("users");
 
+        // Load saved username/password if previously saved
         loadSavedData();
 
+        // Login Button Click
         btnLogin.setOnClickListener(v -> {
             String username = etUsername.getText().toString().trim();
             String password = etPassword.getText().toString().trim();
+            boolean isValid = true;
 
-            if (username.isEmpty() || password.isEmpty()) {
-                Toast.makeText(LoginActivity.this, "Please enter all fields", Toast.LENGTH_SHORT).show();
-                return;
+            // Field validation
+            if (username.isEmpty()) {
+                etUsername.setError("Username is required");
+                isValid = false;
+            }
+            if (password.isEmpty()) {
+                etPassword.setError("Password is required");
+                isValid = false;
             }
 
+            if (!isValid) return;
+
+            // Save login credentials if checkbox is checked
             if (checkboxSaveData.isChecked()) {
                 saveUserData(username, password);
             }
 
-            // ✅ Save to Firebase
-            String userId = databaseReference.push().getKey(); // unique key
-            User user = new User(username, password); // see User class below
+            // 🔒 NOTE: This is not a secure login method – for demo only
+            String userId = databaseReference.push().getKey();
             if (userId != null) {
+                User user = new User(username, password);
                 databaseReference.child(userId).setValue(user);
             }
 
-            // Navigate to NewsActivity
+            Toast.makeText(this, "Login successful!", Toast.LENGTH_SHORT).show();
+
+            // Navigate to News Activity
             Intent intent = new Intent(LoginActivity.this, NewsMainActivity.class);
             startActivity(intent);
             finish();
         });
 
+        // Sign Up Text Click
         signUp.setOnClickListener(v -> {
             Intent intent = new Intent(LoginActivity.this, SignupActivity.class);
             startActivity(intent);
         });
 
-        // Social media image click handling
+        // Social media login redirects
         findViewById(R.id.facebook).setOnClickListener(v -> {
-            Intent intent = new Intent(LoginActivity.this, FbActivity.class);
-            startActivity(intent);
+            startActivity(new Intent(this, FbActivity.class));
         });
 
         findViewById(R.id.twitter).setOnClickListener(v -> {
-            Intent intent = new Intent(LoginActivity.this, TwitterActivity.class);
-            startActivity(intent);
+            startActivity(new Intent(this, TwitterActivity.class));
         });
 
         findViewById(R.id.google).setOnClickListener(v -> {
-            Intent intent = new Intent(LoginActivity.this, GoogleActivity.class);
-            startActivity(intent);
+            startActivity(new Intent(this, GoogleActivity.class));
         });
 
         findViewById(R.id.apple).setOnClickListener(v -> {
-            Intent intent = new Intent(LoginActivity.this, AppleActivity.class);
-            startActivity(intent);
+            startActivity(new Intent(this, AppleActivity.class));
         });
     }
 
+    // Save credentials using SharedPreferences
     private void saveUserData(String username, String password) {
         SharedPreferences sharedPreferences = getSharedPreferences("LoginPrefs", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -103,6 +114,7 @@ public class LoginActivity extends AppCompatActivity {
         editor.apply();
     }
 
+    // Load credentials if saved
     private void loadSavedData() {
         SharedPreferences sharedPreferences = getSharedPreferences("LoginPrefs", Context.MODE_PRIVATE);
         String savedUsername = sharedPreferences.getString("Username", "");
@@ -113,12 +125,12 @@ public class LoginActivity extends AppCompatActivity {
         checkboxSaveData.setChecked(!savedUsername.isEmpty() && !savedPassword.isEmpty());
     }
 
-    // 👇 Helper class for user model
+    // User model for Firebase
     public static class User {
         public String username;
         public String password;
 
-        public User() {} // Needed for Firebase
+        public User() {} // Required for Firebase
 
         public User(String username, String password) {
             this.username = username;
