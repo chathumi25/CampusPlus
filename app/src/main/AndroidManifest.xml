@@ -66,6 +66,20 @@
         <activity android:name=".MenueActivity"
             android:exported="false" />
 
+        <activity android:name=".FbActivity"
+            android:exported="false" />
+
+        <activity android:name=".TwitterActivity"
+            android:exported="false" />
+
+        <activity android:name=".GoogleActivity"
+            android:exported="false" />
+
+        <activity android:name=".AppleActivity"
+            android:exported="false" />
+
+
+
     </application>
 
 </manifest>
