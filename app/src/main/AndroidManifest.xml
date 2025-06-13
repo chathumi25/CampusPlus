@@ -63,6 +63,9 @@
         <activity android:name=".SettingsActivity"
             android:exported="false" />
 
+        <activity android:name=".MenueActivity"
+            android:exported="false" />
+
     </application>
 
 </manifest>

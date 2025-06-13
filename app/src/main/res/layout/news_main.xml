@@ -17,6 +17,7 @@
         android:paddingEnd="16dp">
 
         <ImageView
+            android:id="@+id/menu_icon"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:src="@drawable/menu1" />

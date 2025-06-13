@@ -16,7 +16,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class NewsMainActivity extends AppCompatActivity {
 
     private EditText searchBar;
-    private ImageView profileIcon;
+    private ImageView profileIcon, menuIcon;
     private TextView sportsNewsCard, examNewsCard, academicNewsCard;
     private Button btnLogout;
 
@@ -27,11 +27,18 @@ public class NewsMainActivity extends AppCompatActivity {
 
         // Initialize views
         profileIcon = findViewById(R.id.profile_icon);
+        menuIcon = findViewById(R.id.menu_icon); // menu icon added here
         searchBar = findViewById(R.id.searchBar);
         sportsNewsCard = findViewById(R.id.sports_card);
         examNewsCard = findViewById(R.id.exam_card);
         academicNewsCard = findViewById(R.id.academic_card);
         btnLogout = findViewById(R.id.btnLogout);
+
+        // Menu icon click - open menu screen (MenuActivity)
+        menuIcon.setOnClickListener(v -> {
+            Intent intent = new Intent(NewsMainActivity.this, MenueActivity.class);
+            startActivity(intent);
+        });
 
         // Open profile
         profileIcon.setOnClickListener(v -> {
