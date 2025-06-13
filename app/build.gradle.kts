@@ -1,5 +1,5 @@
 plugins {
-    id("com.google.gms.google-services")
+    id("com.google.gms.google-services") // Required for Firebase
     alias(libs.plugins.android.application)
 }
 
@@ -26,6 +26,7 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
@@ -33,19 +34,21 @@ android {
 }
 
 dependencies {
-
-
-
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
-    implementation(libs.firebase.auth)
+
+    // Firebase BOM - manages all versions
+    implementation(platform("com.google.firebase:firebase-bom:33.15.0"))
+
+    // Firebase services
+    implementation("com.google.firebase:firebase-auth")
+    implementation("com.google.firebase:firebase-database")
+    implementation("com.google.firebase:firebase-analytics")
+    implementation("com.google.firebase:firebase-auth")
+    // Testing
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
-    implementation(platform("com.google.firebase:firebase-bom:33.15.0"))
-    implementation("com.google.firebase:firebase-analytics")
-
-
 }

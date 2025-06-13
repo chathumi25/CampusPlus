@@ -56,8 +56,12 @@
 
         <activity android:name=".DeveloperActivity"
             android:exported="false" />
+
         <activity android:name=".EditProfileActivity"
-            android:exported="false" />/>
+            android:exported="false" />
+
+        <activity android:name=".SettingsActivity"
+            android:exported="false" />
 
     </application>
 

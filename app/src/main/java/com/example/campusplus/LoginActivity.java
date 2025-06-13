@@ -1,11 +1,9 @@
 package com.example.campusplus;
 
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -14,6 +12,9 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 public class LoginActivity extends AppCompatActivity {
 
     EditText etUsername, etPassword;
@@ -21,10 +22,12 @@ public class LoginActivity extends AppCompatActivity {
     Button btnLogin;
     TextView signUp;
 
+    DatabaseReference databaseReference; // Firebase DB reference
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.login_main); // Your layout file
+        setContentView(R.layout.login_main);
 
         // Initialize views
         etUsername = findViewById(R.id.etUsername);
@@ -33,10 +36,11 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin = findViewById(R.id.btnLogin);
         signUp = findViewById(R.id.signUp);
 
-        // Load saved data (optional)
+        // Firebase reference to "users" node
+        databaseReference = FirebaseDatabase.getInstance().getReference("users");
+
         loadSavedData();
 
-        // Login button click
         btnLogin.setOnClickListener(v -> {
             String username = etUsername.getText().toString().trim();
             String password = etPassword.getText().toString().trim();
@@ -50,15 +54,19 @@ public class LoginActivity extends AppCompatActivity {
                 saveUserData(username, password);
             }
 
-            // TODO: Optional - validate credentials before proceeding
+            // ✅ Save to Firebase
+            String userId = databaseReference.push().getKey(); // unique key
+            User user = new User(username, password); // see User class below
+            if (userId != null) {
+                databaseReference.child(userId).setValue(user);
+            }
 
-            // Move to NewsActivity
+            // Navigate to NewsActivity
             Intent intent = new Intent(LoginActivity.this, NewsMainActivity.class);
             startActivity(intent);
             finish();
         });
 
-        // Sign Up text click
         signUp.setOnClickListener(v -> {
             Intent intent = new Intent(LoginActivity.this, SignupActivity.class);
             startActivity(intent);
@@ -82,5 +90,17 @@ public class LoginActivity extends AppCompatActivity {
         etPassword.setText(savedPassword);
         checkboxSaveData.setChecked(!savedUsername.isEmpty() && !savedPassword.isEmpty());
     }
-}
 
+    // 👇 Helper class for user model
+    public static class User {
+        public String username;
+        public String password;
+
+        public User() {} // Needed for Firebase
+
+        public User(String username, String password) {
+            this.username = username;
+            this.password = password;
+        }
+    }
+}

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:background="#15292B"
+android:padding="16dp">
+
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal">
+
+    <!-- Search bar -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp">
+
+        <ImageView
+        android:id="@+id/backicon"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:src="@drawable/backicon"
+        android:contentDescription="Back Button" />
+
+
+    </LinearLayout>
+
+    <!-- Title -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Setting"
+        android:textSize="28sp"
+        android:textColor="#D9EDF2"
+        android:layout_marginBottom="20dp"
+        android:textStyle="bold" />
+
+    <!-- Buttons -->
+    <Button
+        android:id="@+id/btn_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Login"
+
+        android:backgroundTint="#2E3D43"
+        android:textColor="#ffffff"
+        android:layout_marginVertical="6dp" />
+
+    <Button
+        android:id="@+id/btn_profile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Profile"
+
+        android:backgroundTint="#2E3D43"
+        android:textColor="#ffffff"
+        android:layout_marginVertical="6dp" />
+
+    <Button
+        android:id="@+id/btn_news"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="News"
+
+        android:backgroundTint="#2E3D43"
+        android:textColor="#ffffff"
+        android:layout_marginVertical="6dp" />
+
+    <Button
+        android:id="@+id/btn_about"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Developer Infomation"
+
+        android:backgroundTint="#2E3D43"
+        android:textColor="#ffffff"
+        android:layout_marginVertical="6dp" />
+
+
+
+    <!-- Logo -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_marginTop="50dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CP"
+            android:textSize="72sp"
+            android:textColor="#879CD4"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Campus\nPlus"
+            android:textSize="20sp"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            android:gravity="center" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="News Update"
+            android:textColor="#E0E44C"
+            android:textSize="14sp"
+            android:layout_marginTop="4dp" />
+    </LinearLayout>
+</LinearLayout>
+</ScrollView>
