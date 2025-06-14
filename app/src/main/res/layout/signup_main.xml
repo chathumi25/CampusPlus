@@ -15,7 +15,7 @@
             android:id="@+id/tv_register"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="22dp"
+            android:layout_marginTop="12dp"
             android:layout_marginBottom="24dp"
             android:gravity="center"
             android:text="Register"
@@ -162,16 +162,29 @@
             android:textColor="#B0BEC5"
             android:textSize="12sp"
             android:layout_marginBottom="16dp"/>
-        <EditText
-            android:id="@+id/edit_statement"
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Statement"
-            android:text="Personal Statement"
-            android:textColor="#FFFFFF"
+            android:orientation="horizontal"
+            android:background="#37444B"
+            android:padding="4dp"
+            android:layout_marginBottom="4dp"
+            android:gravity="center_vertical">
 
-            android:padding="12dp"
-            android:inputType="textMultiLine" />
+            <EditText
+                android:id="@+id/edit_statement"
+                android:hint="Statement"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+
+                android:textColor="#FFFFFF"
+                android:textColorHint="#B0BEC5"
+                android:paddingStart="12dp"
+                android:inputType="text"/>
+        </LinearLayout>
 
         <!-- Checkboxes -->
 
@@ -190,6 +203,7 @@
             android:id="@+id/btnSignUp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
             android:layout_marginTop="14dp"
             android:background="#5CA6B2"
             android:text="SignUp"
@@ -198,8 +212,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="6dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="4dp"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -241,7 +255,7 @@
             android:textColor="#B0BEC5"
             android:textSize="16sp"
             android:gravity="center"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="16dp"/>
+            android:layout_marginTop="7dp"
+            android:layout_marginBottom="8dp"/>
     </LinearLayout>
 </ScrollView>

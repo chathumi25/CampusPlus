@@ -129,7 +129,7 @@
             android:id="@+id/login_button"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:text="LOGIN"
+            android:text="Signup"
             android:backgroundTint="#55C1D6"
             android:textColor="#000000"
             android:textStyle="bold"

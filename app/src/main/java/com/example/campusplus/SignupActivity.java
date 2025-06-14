@@ -57,10 +57,10 @@ public class SignupActivity extends AppCompatActivity {
         });
 
         // Social login redirection
-        fbIcon.setOnClickListener(v -> startActivity(new Intent(SignupActivity.this, FbActivity.class)));
-        twitterIcon.setOnClickListener(v -> startActivity(new Intent(SignupActivity.this, TwitterActivity.class)));
-        googleIcon.setOnClickListener(v -> startActivity(new Intent(SignupActivity.this, GoogleActivity.class)));
-        appleIcon.setOnClickListener(v -> startActivity(new Intent(SignupActivity.this, AppleActivity.class)));
+        fbIcon.setOnClickListener(v -> startActivity(new Intent(SignupActivity.this, FbSignup.class)));
+        twitterIcon.setOnClickListener(v -> startActivity(new Intent(SignupActivity.this, TwitterSignup.class)));
+        googleIcon.setOnClickListener(v -> startActivity(new Intent(SignupActivity.this, GoogleSignup.class)));
+        appleIcon.setOnClickListener(v -> startActivity(new Intent(SignupActivity.this, AppleSignup.class)));
     }
 
     private void registerUser() {

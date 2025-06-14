@@ -75,8 +75,20 @@
         <activity android:name=".GoogleActivity"
             android:exported="false" />
 
-        <activity android:name=".AppleActivity"
+
+        <activity android:name=".FbSignup"
             android:exported="false" />
+
+        <activity android:name=".TwitterSignup"
+            android:exported="false" />
+
+        <activity android:name=".GoogleSignup"
+            android:exported="false" />
+
+        <activity android:name=".AppleSignup"
+        android:exported="false" />
+
+
 
 
 
