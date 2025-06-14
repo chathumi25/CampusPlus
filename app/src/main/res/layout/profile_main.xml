@@ -57,17 +57,19 @@
                 />
 
             <TextView
+                android:id="@+id/edit_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Name: Janitha Rathnayaka"
+                android:text="Name: (loading...)"
                 android:textColor="#000000"
                 android:textSize="16sp"
                 android:paddingTop="8dp" />
 
             <TextView
+                android:id="@+id/edit_email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Email: janitha.rathnayaka@gmail.com"
+                android:text="Email: (loading...)"
                 android:textColor="#000000"
                 android:textSize="16sp" />
         </LinearLayout>

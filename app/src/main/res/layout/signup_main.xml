@@ -162,6 +162,15 @@
             android:textColor="#B0BEC5"
             android:textSize="12sp"
             android:layout_marginBottom="16dp"/>
+        <EditText
+            android:id="@+id/edit_statement"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Undergraduate"
+            android:textColor="#FFFFFF"
+
+            android:padding="12dp"
+            android:inputType="textMultiLine" />
 
         <!-- Checkboxes -->
         <CheckBox

@@ -24,9 +24,9 @@ public class SplashScreen extends AppCompatActivity {
 
         new Handler().postDelayed(() -> {
             if (isUserLoggedIn()) {
-                startActivity(new Intent(SplashScreen.this, NewsMainActivity.class));
+                startActivity(new Intent(SplashScreen.this,  LoginActivity.class));
             } else {
-                startActivity(new Intent(SplashScreen.this, LoginActivity.class));
+                startActivity(new Intent(SplashScreen.this, NewsMainActivity.class));
             }
             finish();
         }, 2000); // Delay for 2 seconds

@@ -46,7 +46,13 @@ dependencies {
     implementation("com.google.firebase:firebase-auth")
     implementation("com.google.firebase:firebase-database")
     implementation("com.google.firebase:firebase-analytics")
-    implementation("com.google.firebase:firebase-auth")
+    implementation("com.google.firebase:firebase-auth:22.3.1")
+    implementation("com.google.firebase:firebase-firestore:24.10.3")
+
+
+    implementation(libs.firebase.storage)
+
+
     // Testing
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
