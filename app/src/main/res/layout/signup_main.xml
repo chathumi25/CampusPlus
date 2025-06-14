@@ -15,7 +15,7 @@
             android:id="@+id/tv_register"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="22dp"
             android:layout_marginBottom="24dp"
             android:gravity="center"
             android:text="Register"
@@ -134,7 +134,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:background="#37444B"
-            android:padding="8dp"
+            android:padding="4dp"
             android:layout_marginBottom="8dp"
             android:gravity="center_vertical">
 
@@ -167,31 +167,70 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Statement"
-            android:text="Undergraduate"
+            android:text="Personal Statement"
             android:textColor="#FFFFFF"
 
             android:padding="12dp"
             android:inputType="textMultiLine" />
 
         <!-- Checkboxes -->
+
+        <!-- Signup Button -->
+        <!-- Social Media Icons -->
         <CheckBox
             android:id="@+id/cb_save_data"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Save Data"
-            android:textColor="#FFFFFF"
+            android:layout_marginBottom="2dp"
             android:checked="true"
-            android:layout_marginBottom="8dp"/>
+            android:text="Save Data"
+            android:textColor="#FFFFFF" />
 
-        <!-- Signup Button -->
         <Button
             android:id="@+id/btnSignUp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="SignUp"
+            android:layout_marginTop="14dp"
             android:background="#5CA6B2"
+            android:text="SignUp"
             android:textColor="#091215" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="6dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/facebook"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/facebook" />
+
+            <ImageView
+                android:id="@+id/twitter"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="16dp"
+                android:src="@drawable/twitter" />
+
+            <ImageView
+                android:id="@+id/google"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="16dp"
+                android:src="@drawable/google" />
+
+            <ImageView
+                android:id="@+id/apple"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="16dp"
+                android:src="@drawable/apple" />
+        </LinearLayout>
+
 
         <!-- Already have account -->
         <TextView
@@ -202,7 +241,7 @@
             android:textColor="#B0BEC5"
             android:textSize="16sp"
             android:gravity="center"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="10dp"
             android:layout_marginBottom="16dp"/>
     </LinearLayout>
 </ScrollView>

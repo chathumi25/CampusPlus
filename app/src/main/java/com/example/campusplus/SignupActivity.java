@@ -10,18 +10,20 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
 
 public class SignupActivity extends AppCompatActivity {
 
-    EditText etUsername, etPassword, etConfirmPassword, etEmail,etPersonalStatement;
+    EditText etUsername, etPassword, etConfirmPassword, etEmail, etPersonalStatement;
     Button btnSignUp;
     TextView tvAlreadyAccount;
 
     FirebaseAuth mAuth;
     FirebaseFirestore firestore;
+
+    // Social icon views
+    ImageView fbIcon, twitterIcon, googleIcon, appleIcon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,9 +40,14 @@ public class SignupActivity extends AppCompatActivity {
         etEmail = findViewById(R.id.et_email);
         etPersonalStatement = findViewById(R.id.edit_statement);
 
-
         btnSignUp = findViewById(R.id.btnSignUp);
         tvAlreadyAccount = findViewById(R.id.tv_already_account);
+
+        // Initialize social icon views
+        fbIcon = findViewById(R.id.facebook);
+        twitterIcon = findViewById(R.id.twitter);
+        googleIcon = findViewById(R.id.google);
+        appleIcon = findViewById(R.id.apple);
 
         btnSignUp.setOnClickListener(v -> registerUser());
 
@@ -48,6 +55,12 @@ public class SignupActivity extends AppCompatActivity {
             startActivity(new Intent(SignupActivity.this, LoginActivity.class));
             finish();
         });
+
+        // Social login redirection
+        fbIcon.setOnClickListener(v -> startActivity(new Intent(SignupActivity.this, FbActivity.class)));
+        twitterIcon.setOnClickListener(v -> startActivity(new Intent(SignupActivity.this, TwitterActivity.class)));
+        googleIcon.setOnClickListener(v -> startActivity(new Intent(SignupActivity.this, GoogleActivity.class)));
+        appleIcon.setOnClickListener(v -> startActivity(new Intent(SignupActivity.this, AppleActivity.class)));
     }
 
     private void registerUser() {
@@ -59,20 +72,16 @@ public class SignupActivity extends AppCompatActivity {
 
         if (!validateInputs(username, email, password, confirmPassword)) return;
 
-        // Create user with Firebase Authentication
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        // Get user ID (UID)
                         String userId = mAuth.getCurrentUser().getUid();
 
-                        // Prepare user data to save in Firestore
                         Map<String, Object> user = new HashMap<>();
                         user.put("name", username);
                         user.put("email", email);
-                        user.put("statement", personalStatement); // Initially empty, can update later
+                        user.put("statement", personalStatement);
 
-                        // Save user data under "Users" collection with document id = userId
                         firestore.collection("Users").document(userId)
                                 .set(user)
                                 .addOnSuccessListener(unused -> {

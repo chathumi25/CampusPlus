@@ -78,7 +78,7 @@ public class ProfileActivity extends AppCompatActivity {
                     if (documentSnapshot.exists()) {
                         String name = documentSnapshot.getString("name");
                         String email = documentSnapshot.getString("email");
-                        String statement = documentSnapshot.getString("personalStatement");
+                        String statement = documentSnapshot.getString("statement");
                         String profileImageUri = documentSnapshot.getString("profileImageUri");
 
                         tvName.setText(name != null ? name : "N/A");

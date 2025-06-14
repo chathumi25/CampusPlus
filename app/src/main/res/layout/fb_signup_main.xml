@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="60dp"
             android:layout_marginBottom="30dp"
-            android:text="Register with Facebook"
+            android:text="Rgister with Facebook"
             android:textColor="#CFE8F2"
             android:textSize="24sp"
             android:textStyle="bold"/>
@@ -114,27 +114,25 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-        <CheckBox
-            android:id="@+id/checkboxSaveData"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="26dp"
-            android:text="Save Data"
-            android:textColor="#FFFFFF" />
+            <CheckBox
+                android:id="@+id/checkboxSaveData"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="26dp"
+                android:text="Save Data"
+                android:textColor="#FFFFFF" />
         </RelativeLayout>
 
 
         <!-- Login Button -->
         <Button
-            android:id="@+id/login_button"
+            android:id="@+id/btnSignUp"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:text="LOGIN"
-            android:backgroundTint="#55C1D6"
-            android:textColor="#000000"
-            android:textStyle="bold"
-            android:layout_marginBottom="30dp"
-            android:background="@drawable/loginbackground" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:background="#5CA6B2"
+            android:text="SignUp"
+            android:textColor="#091215" />
 
         <!-- Sign Up Link -->
         <TextView
