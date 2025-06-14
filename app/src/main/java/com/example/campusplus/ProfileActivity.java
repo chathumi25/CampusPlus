@@ -1,29 +1,33 @@
 package com.example.campusplus;
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.Toast;
-
+import android.widget.*;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.squareup.picasso.Picasso;
 
 public class ProfileActivity extends AppCompatActivity {
 
     ImageView profileImage, backButton;
     Button editProfile, settings, logout, help;
+    TextView tvName, tvEmail, tvPersonalStatement;
     private static final int PICK_IMAGE = 1;
+
+    FirebaseAuth mAuth;
+    FirebaseFirestore firestore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.profile_main); // Keep original layout
+        setContentView(R.layout.profile_main);
 
         profileImage = findViewById(R.id.profile_image);
         backButton = findViewById(R.id.backButton);
@@ -32,43 +36,64 @@ public class ProfileActivity extends AppCompatActivity {
         logout = findViewById(R.id.logout);
         help = findViewById(R.id.help);
 
-        if (profileImage != null) {
-            profileImage.setOnClickListener(v -> {
-                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(intent, PICK_IMAGE);
-            });
-        }
+        tvName = findViewById(R.id.tv_name);
+        tvEmail = findViewById(R.id.tv_personal_statement); // fixed: email textview should be tv_email
+        tvPersonalStatement = findViewById(R.id.tv_personal_statement);
 
-        if (editProfile != null) {
-            editProfile.setOnClickListener(v -> {
-                // Already opens EditProfileActivity
-                Intent intent = new Intent(ProfileActivity.this, EditProfileActivity.class);
-                startActivity(intent);
-            });
-        }
+        mAuth = FirebaseAuth.getInstance();
+        firestore = FirebaseFirestore.getInstance();
 
-        if (settings != null) {
-            settings.setOnClickListener(v -> {
-                Intent intent = new Intent(ProfileActivity.this, SettingsActivity.class);
-                startActivity(intent);
-            });
-        }
+        loadUserData();
 
-        if (help != null) {
-            help.setOnClickListener(v -> {
-                // Changed from opening URL to opening DeveloperActivity screen
-                Intent intent = new Intent(ProfileActivity.this, DeveloperActivity.class);
-                startActivity(intent);
-            });
-        }
+        profileImage.setOnClickListener(v -> {
+            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            startActivityForResult(intent, PICK_IMAGE);
+        });
 
-        if (logout != null) {
-            logout.setOnClickListener(v -> showLogoutDialog());
-        }
+        editProfile.setOnClickListener(v -> {
+            Intent intent = new Intent(ProfileActivity.this, EditProfileActivity.class);
+            startActivity(intent);
+        });
 
-        if (backButton != null) {
-            backButton.setOnClickListener(v -> onBackPressed());
-        }
+        settings.setOnClickListener(v -> {
+            Intent intent = new Intent(ProfileActivity.this, SettingsActivity.class);
+            startActivity(intent);
+        });
+
+        help.setOnClickListener(v -> {
+            Intent intent = new Intent(ProfileActivity.this, DeveloperActivity.class);
+            startActivity(intent);
+        });
+
+        logout.setOnClickListener(v -> showLogoutDialog());
+        backButton.setOnClickListener(v -> onBackPressed());
+    }
+
+    private void loadUserData() {
+        String userId = mAuth.getCurrentUser().getUid();
+
+        firestore.collection("Users").document(userId)
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        String name = documentSnapshot.getString("name");
+                        String email = documentSnapshot.getString("email");
+                        String statement = documentSnapshot.getString("personalStatement");
+                        String profileImageUri = documentSnapshot.getString("profileImageUri");
+
+                        tvName.setText(name != null ? name : "N/A");
+                        tvEmail.setText(email != null ? email : "N/A");
+                        tvPersonalStatement.setText(statement != null ? statement : "No statement yet.");
+
+                        if (profileImageUri != null && !profileImageUri.isEmpty()) {
+                            Picasso.get().load(profileImageUri).into(profileImage);
+                        } else {
+                            profileImage.setImageResource(R.drawable.dp); // fallback default image
+                        }
+                    }
+                })
+                .addOnFailureListener(e ->
+                        Toast.makeText(this, "Failed to load profile", Toast.LENGTH_SHORT).show());
     }
 
     @Override
@@ -81,13 +106,13 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void showLogoutDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Sign Out")
+        new AlertDialog.Builder(this)
+                .setTitle("Sign Out")
                 .setMessage("Really want to sign out?")
                 .setPositiveButton("Yes", (dialog, which) -> {
                     Toast.makeText(ProfileActivity.this, "Logged out", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(ProfileActivity.this, LoginActivity.class);
-                    startActivity(intent);
+                    mAuth.signOut();
+                    startActivity(new Intent(ProfileActivity.this, LoginActivity.class));
                     finish();
                 })
                 .setNegativeButton("No", (dialog, which) -> dialog.dismiss())

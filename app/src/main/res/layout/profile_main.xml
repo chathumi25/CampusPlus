@@ -57,7 +57,7 @@
                 />
 
             <TextView
-                android:id="@+id/edit_name"
+                android:id="@+id/tv_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Name: (loading...)"
@@ -66,10 +66,10 @@
                 android:paddingTop="8dp" />
 
             <TextView
-                android:id="@+id/edit_email"
+                android:id="@+id/tv_personal_statement"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Email: (loading...)"
+                android:text="Personal Statement"
                 android:textColor="#000000"
                 android:textSize="16sp" />
         </LinearLayout>

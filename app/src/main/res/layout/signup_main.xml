@@ -166,6 +166,7 @@
             android:id="@+id/edit_statement"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:hint="Statement"
             android:text="Undergraduate"
             android:textColor="#FFFFFF"
 
