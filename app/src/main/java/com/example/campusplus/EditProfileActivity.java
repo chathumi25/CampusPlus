@@ -18,6 +18,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
@@ -43,6 +44,7 @@ public class EditProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile_edit_main);
 
+        // Initialize views
         profileImage = findViewById(R.id.profile_image);
         editIcon = findViewById(R.id.edit_profile_icon);
         backButton = findViewById(R.id.backButton);
@@ -51,16 +53,21 @@ public class EditProfileActivity extends AppCompatActivity {
         statementEditText = findViewById(R.id.edit_statement);
         saveButton = findViewById(R.id.save_button);
 
-        // Firebase
+        // Initialize Firebase
         auth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
         uid = auth.getCurrentUser().getUid();
 
-        // Load user data
+        // Load current user data
         loadUserData();
 
+        // Image picker listener
         editIcon.setOnClickListener(view -> openImagePicker());
+
+        // Save profile button
         saveButton.setOnClickListener(view -> saveProfile());
+
+        // Back button
         backButton.setOnClickListener(v -> finish());
     }
 
@@ -102,11 +109,13 @@ public class EditProfileActivity extends AppCompatActivity {
                 if (imageUri != null && !imageUri.isEmpty()) {
                     Picasso.get().load(imageUri).into(profileImage);
                 } else {
-                    profileImage.setImageResource(R.drawable.dp);
+                    profileImage.setImageResource(R.drawable.dp); // default image
                 }
+            } else {
+                Toast.makeText(this, "No user data found", Toast.LENGTH_SHORT).show();
             }
         }).addOnFailureListener(e ->
-                Toast.makeText(EditProfileActivity.this, "Failed to load profile", Toast.LENGTH_SHORT).show());
+                Toast.makeText(this, "Failed to load profile: " + e.getMessage(), Toast.LENGTH_SHORT).show());
     }
 
     private void saveProfile() {
@@ -114,35 +123,35 @@ public class EditProfileActivity extends AppCompatActivity {
         String email = emailEditText.getText().toString().trim();
         String statement = statementEditText.getText().toString().trim();
 
+        if (name.isEmpty() || email.isEmpty()) {
+            Toast.makeText(this, "Name and Email are required", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        Map<String, Object> userUpdates = new HashMap<>();
+        userUpdates.put("name", name);
+        userUpdates.put("email", email);
+        userUpdates.put("statement", statement);
+
+        DocumentReference userDocRef = db.collection("Users").document(uid);
+
         if (selectedImageUri != null) {
-            FirebaseStorage.getInstance().getReference("profileImages/" + uid)
-                    .putFile(selectedImageUri)
-                    .addOnSuccessListener(taskSnapshot -> {
-                        taskSnapshot.getStorage().getDownloadUrl().addOnSuccessListener(uri -> {
-                            String imageUrl = uri.toString();
+            StorageReference storageRef = FirebaseStorage.getInstance().getReference("profileImages/" + uid);
+            storageRef.putFile(selectedImageUri)
+                    .addOnSuccessListener(taskSnapshot ->
+                            taskSnapshot.getStorage().getDownloadUrl().addOnSuccessListener(uri -> {
+                                userUpdates.put("profileImageUri", uri.toString());
 
-                            Map<String, Object> userUpdates = new HashMap<>();
-                            userUpdates.put("name", name);
-                            userUpdates.put("email", email);
-                            userUpdates.put("statement", statement);
-                            userUpdates.put("profileImageUri", imageUrl);
-
-                            db.collection("users").document(uid).update(userUpdates)
-                                    .addOnSuccessListener(unused ->
-                                            Toast.makeText(EditProfileActivity.this, "Profile updated!", Toast.LENGTH_SHORT).show())
-                                    .addOnFailureListener(e ->
-                                            Toast.makeText(EditProfileActivity.this, "Failed to update profile", Toast.LENGTH_SHORT).show());
-                        });
-                    })
+                                userDocRef.update(userUpdates)
+                                        .addOnSuccessListener(unused ->
+                                                Toast.makeText(EditProfileActivity.this, "Profile updated!", Toast.LENGTH_SHORT).show())
+                                        .addOnFailureListener(e ->
+                                                Toast.makeText(EditProfileActivity.this, "Failed to update profile", Toast.LENGTH_SHORT).show());
+                            }))
                     .addOnFailureListener(e ->
                             Toast.makeText(EditProfileActivity.this, "Image upload failed", Toast.LENGTH_SHORT).show());
         } else {
-            Map<String, Object> userUpdates = new HashMap<>();
-            userUpdates.put("name", name);
-            userUpdates.put("email", email);
-            userUpdates.put("statement", statement);
-
-            db.collection("users").document(uid).update(userUpdates)
+            userDocRef.update(userUpdates)
                     .addOnSuccessListener(unused ->
                             Toast.makeText(EditProfileActivity.this, "Profile updated!", Toast.LENGTH_SHORT).show())
                     .addOnFailureListener(e ->
