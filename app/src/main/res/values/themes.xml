@@ -25,5 +25,10 @@
         <item name="android:background">@drawable/btn_login_bg</item> <!-- use your custom drawable -->
         <item name="android:textColor">#091215</item>
     </style>
+    <style name="CircleImageViewStyle">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
 
 </resources>
