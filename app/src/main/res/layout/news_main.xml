@@ -71,70 +71,108 @@
     <!-- Scrollable News Section -->
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="491dp"
         android:layout_weight="1">
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
             android:padding="10dp">
 
             <!-- Card 1: Sports -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="129dp"
                 android:layout_marginBottom="10dp"
                 app:cardCornerRadius="10dp">
 
                 <LinearLayout
-                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="130dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@android:color/white"
+                    android:elevation="4dp"
+                    android:orientation="horizontal"
+                    android:padding="12dp">
 
-                    <ImageView
+
+                    <FrameLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/sports" />
+                        android:layout_height="wrap_content">
 
-                    <TextView
-                        android:id="@+id/sports_card" android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Faculty football tournament finals held today."
-                        android:padding="10dp"
-                        android:textColor="#fff"
-                        android:background="#062D3E" />
+                        <ImageView
+                            android:id="@+id/newsImage"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/sports" />
+
+                        <TextView
+
+                            android:id="@+id/sports_card"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
+                            android:background="#062D3E"
+                            android:padding="0dp"
+                            android:text="Faculty football tournament finals held today."
+                            android:textSize="15dp"
+                            android:textColor="#D7DFE0" />
+                    </FrameLayout>
+
+
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
             <!-- Card 2: Exams -->
+            <!-- Card 1: Sports -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="129dp"
                 android:layout_marginBottom="10dp"
                 app:cardCornerRadius="10dp">
 
                 <LinearLayout
-                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="130dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@android:color/white"
+                    android:elevation="4dp"
+                    android:orientation="horizontal"
+                    android:padding="12dp">
 
-                    <ImageView
+
+                    <FrameLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/exams" />
+                        android:layout_height="wrap_content">
 
-                    <TextView
-                        android:id="@+id/exam_card" android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="#052C3C"
-                        android:padding="10dp"
-                        android:text="Semester 2 Final Exam Timetable Released"
-                        android:textColor="#fff" />
+                        <ImageView
+                            android:id="@+id/newseImage"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/exams" />
+
+                        <TextView
+
+                            android:id="@+id/exam_card"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
+                            android:background="#062D3E"
+                            android:padding="0dp"
+                            android:text="Semester 2 Final Exam Timetable Released"
+                            android:textSize="15dp"
+                            android:textColor="#D7DFE0" />
+                    </FrameLayout>
+
+
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
+
+
+
 
             <!-- Card 3: Academic -->
             <androidx.cardview.widget.CardView
@@ -144,29 +182,52 @@
                 app:cardCornerRadius="10dp">
 
                 <LinearLayout
-                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="130dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@android:color/white"
+                    android:elevation="4dp"
+                    android:orientation="horizontal"
+                    android:padding="12dp">
 
-                    <ImageView
+
+                    <FrameLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/academicsnew" />
+                        android:layout_height="wrap_content">
 
-                    <TextView
-                        android:id="@+id/academic_card" android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="New Dean Appointed for Faculty of Technology"
-                        android:padding="10dp"
-                        android:textColor="#fff"
-                        android:background="#052B3C" />
+                        <ImageView
+                            android:id="@+id/newsfImage"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/academicsnew" />
+
+                        <TextView
+
+                            android:id="@+id/academic_card"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
+                            android:background="#062D3E"
+                            android:padding="0dp"
+                            android:text="New Dean Appointed for Faculty of Technology"
+                            android:textSize="15dp"
+                            android:textColor="#D7DFE0" />
+                    </FrameLayout>
+
+
                 </LinearLayout>
+
             </androidx.cardview.widget.CardView>
         </LinearLayout>
     </ScrollView>
 
-
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewNews"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="10dp"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
@@ -177,4 +238,6 @@
         app:itemIconTint="@color/nav_icon_color"
         app:itemTextColor="@color/nav_text_color"
         app:menu="@menu/bottom_nav_menu" />
+
+
 </LinearLayout>

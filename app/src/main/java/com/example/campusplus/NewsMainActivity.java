@@ -21,6 +21,7 @@ public class NewsMainActivity extends AppCompatActivity {
     private TextView sportsNewsCard, examNewsCard, academicNewsCard;
     private Button btnLogout;
 
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

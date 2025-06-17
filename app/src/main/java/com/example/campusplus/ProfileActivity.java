@@ -5,24 +5,34 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.view.View;
 import android.widget.*;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 public class ProfileActivity extends AppCompatActivity {
 
-    ImageView profileImage, backButton;
-    Button editProfile, settings, logout, help;
-    TextView tvName, tvEmail, tvPersonalStatement;
-    private static final int PICK_IMAGE = 1;
+    private ImageView profileImage, backButton;
+    private Button editProfile, settings, logout, help;
+    private TextView tvName, tvPersonalStatement;
 
     FirebaseAuth mAuth;
     FirebaseFirestore firestore;
+
+    // ActivityResultLaunchers for image pick and edit profile
+    private ActivityResultLauncher<Intent> pickImageLauncher;
+    private ActivityResultLauncher<Intent> editProfileLauncher;
+    private ActivityResultLauncher<Intent> settingsLauncher;
+
+    private static final int SETTINGS_REQUEST_CODE = 101;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,27 +47,61 @@ public class ProfileActivity extends AppCompatActivity {
         help = findViewById(R.id.help);
 
         tvName = findViewById(R.id.tv_name);
-        tvEmail = findViewById(R.id.tv_personal_statement); // fixed: email textview should be tv_email
         tvPersonalStatement = findViewById(R.id.tv_personal_statement);
 
         mAuth = FirebaseAuth.getInstance();
         firestore = FirebaseFirestore.getInstance();
 
+        // Initialize ActivityResultLaunchers
+
+        pickImageLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
+                        Uri selectedImage = result.getData().getData();
+                        if (selectedImage != null) {
+                            // Show image locally immediately
+                            profileImage.setImageURI(selectedImage);
+                            // Upload the image to Firebase Storage and update Firestore
+                            uploadImageToFirebase(selectedImage);
+                        }
+                    }
+                });
+
+        editProfileLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
+                        boolean updated = result.getData().getBooleanExtra("updated", false);
+                        if (updated) {
+                            loadUserData();
+                            Toast.makeText(this, "Profile updated successfully", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+        settingsLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    // Refresh profile if returned from settings
+                    loadUserData();
+                });
+
         loadUserData();
 
         profileImage.setOnClickListener(v -> {
             Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            startActivityForResult(intent, PICK_IMAGE);
+            pickImageLauncher.launch(intent);
         });
 
         editProfile.setOnClickListener(v -> {
             Intent intent = new Intent(ProfileActivity.this, EditProfileActivity.class);
-            startActivity(intent);
+            editProfileLauncher.launch(intent);
         });
 
         settings.setOnClickListener(v -> {
             Intent intent = new Intent(ProfileActivity.this, SettingsActivity.class);
-            startActivity(intent);
+            settingsLauncher.launch(intent);
         });
 
         help.setOnClickListener(v -> {
@@ -66,10 +110,22 @@ public class ProfileActivity extends AppCompatActivity {
         });
 
         logout.setOnClickListener(v -> showLogoutDialog());
-        backButton.setOnClickListener(v -> onBackPressed());
+
+        // Handle back press without using deprecated onBackPressed()
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                finish(); // or call whatever you want when back pressed
+            }
+        });
     }
 
     private void loadUserData() {
+        if (mAuth.getCurrentUser() == null) {
+            Toast.makeText(this, "User not logged in", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         String userId = mAuth.getCurrentUser().getUid();
 
         firestore.collection("Users").document(userId)
@@ -77,12 +133,10 @@ public class ProfileActivity extends AppCompatActivity {
                 .addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.exists()) {
                         String name = documentSnapshot.getString("name");
-                        String email = documentSnapshot.getString("email");
                         String statement = documentSnapshot.getString("statement");
                         String profileImageUri = documentSnapshot.getString("profileImageUri");
 
                         tvName.setText(name != null ? name : "N/A");
-                        tvEmail.setText(email != null ? email : "N/A");
                         tvPersonalStatement.setText(statement != null ? statement : "No statement yet.");
 
                         if (profileImageUri != null && !profileImageUri.isEmpty()) {
@@ -96,13 +150,31 @@ public class ProfileActivity extends AppCompatActivity {
                         Toast.makeText(this, "Failed to load profile", Toast.LENGTH_SHORT).show());
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PICK_IMAGE && resultCode == Activity.RESULT_OK && data != null) {
-            Uri selectedImage = data.getData();
-            profileImage.setImageURI(selectedImage);
+    private void uploadImageToFirebase(Uri imageUri) {
+        if (mAuth.getCurrentUser() == null) {
+            Toast.makeText(this, "User not logged in", Toast.LENGTH_SHORT).show();
+            return;
         }
+
+        String userId = mAuth.getCurrentUser().getUid();
+        StorageReference storageRef = FirebaseStorage.getInstance().getReference();
+        StorageReference profileImagesRef = storageRef.child("profile_images/" + userId + ".jpg");
+
+        profileImagesRef.putFile(imageUri)
+                .addOnSuccessListener(taskSnapshot -> profileImagesRef.getDownloadUrl().addOnSuccessListener(uri -> {
+                    String downloadUrl = uri.toString();
+
+                    firestore.collection("Users").document(userId)
+                            .update("profileImageUri", downloadUrl)
+                            .addOnSuccessListener(aVoid -> {
+                                Picasso.get().load(downloadUrl).into(profileImage);
+                                Toast.makeText(ProfileActivity.this, "Profile image updated!", Toast.LENGTH_SHORT).show();
+                            })
+                            .addOnFailureListener(e ->
+                                    Toast.makeText(ProfileActivity.this, "Failed to save image URL", Toast.LENGTH_SHORT).show());
+                }))
+                .addOnFailureListener(e ->
+                        Toast.makeText(ProfileActivity.this, "Failed to upload image", Toast.LENGTH_SHORT).show());
     }
 
     private void showLogoutDialog() {

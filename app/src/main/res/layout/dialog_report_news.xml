@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/dialog_title_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Title Suggestion"
+        android:textColor="#ffffff"
+        android:textColorHint="#cccccc" />
+
+    <EditText
+        android:id="@+id/dialog_desc_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Description Suggestion"
+        android:textColor="#ffffff"
+        android:textColorHint="#cccccc" />
+
+    <Button
+        android:id="@+id/dialog_report_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Report Suggestion"
+        android:textColor="#ffffff"
+        android:background="#4A6D75"
+        android:layout_gravity="end" />
+</LinearLayout>

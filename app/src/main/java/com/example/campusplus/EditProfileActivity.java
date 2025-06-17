@@ -1,6 +1,7 @@
 package com.example.campusplus;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -34,10 +35,11 @@ public class EditProfileActivity extends AppCompatActivity {
     Button saveButton;
 
     Uri selectedImageUri;
-
     FirebaseFirestore db;
     FirebaseAuth auth;
     String uid;
+
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,30 +55,35 @@ public class EditProfileActivity extends AppCompatActivity {
         statementEditText = findViewById(R.id.edit_statement);
         saveButton = findViewById(R.id.save_button);
 
-        // Initialize Firebase
+        // Prevent editing email
+        emailEditText.setEnabled(false);
+
+        // Firebase instances
         auth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
         uid = auth.getCurrentUser().getUid();
 
-        // Load current user data
+        // Load current user profile data
         loadUserData();
 
-        // Image picker listener
+        // Open image picker when edit icon clicked
         editIcon.setOnClickListener(view -> openImagePicker());
 
-        // Save profile button
+        // Save profile info on button click
         saveButton.setOnClickListener(view -> saveProfile());
 
-        // Back button
+        // Go back to previous screen
         backButton.setOnClickListener(v -> finish());
     }
 
+    // Open image picker
     private void openImagePicker() {
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");
         startActivityForResult(Intent.createChooser(intent, "Select Profile Picture"), PICK_IMAGE_REQUEST);
     }
 
+    // Handle result from image picker
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -93,6 +100,7 @@ public class EditProfileActivity extends AppCompatActivity {
         }
     }
 
+    // Load profile info from Firestore
     private void loadUserData() {
         DocumentReference userRef = db.collection("Users").document(uid);
         userRef.get().addOnSuccessListener(documentSnapshot -> {
@@ -118,19 +126,23 @@ public class EditProfileActivity extends AppCompatActivity {
                 Toast.makeText(this, "Failed to load profile: " + e.getMessage(), Toast.LENGTH_SHORT).show());
     }
 
+    // Save profile updates to Firestore
     private void saveProfile() {
         String name = nameEditText.getText().toString().trim();
-        String email = emailEditText.getText().toString().trim();
         String statement = statementEditText.getText().toString().trim();
 
-        if (name.isEmpty() || email.isEmpty()) {
-            Toast.makeText(this, "Name and Email are required", Toast.LENGTH_SHORT).show();
+        if (name.isEmpty()) {
+            Toast.makeText(this, "Name is required", Toast.LENGTH_SHORT).show();
             return;
         }
 
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Updating profile...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
         Map<String, Object> userUpdates = new HashMap<>();
         userUpdates.put("name", name);
-        userUpdates.put("email", email);
         userUpdates.put("statement", statement);
 
         DocumentReference userDocRef = db.collection("Users").document(uid);
@@ -142,20 +154,33 @@ public class EditProfileActivity extends AppCompatActivity {
                             taskSnapshot.getStorage().getDownloadUrl().addOnSuccessListener(uri -> {
                                 userUpdates.put("profileImageUri", uri.toString());
 
-                                userDocRef.update(userUpdates)
-                                        .addOnSuccessListener(unused ->
-                                                Toast.makeText(EditProfileActivity.this, "Profile updated!", Toast.LENGTH_SHORT).show())
-                                        .addOnFailureListener(e ->
-                                                Toast.makeText(EditProfileActivity.this, "Failed to update profile", Toast.LENGTH_SHORT).show());
+                                // Update Firestore
+                                updateFirestore(userDocRef, userUpdates);
                             }))
-                    .addOnFailureListener(e ->
-                            Toast.makeText(EditProfileActivity.this, "Image upload failed", Toast.LENGTH_SHORT).show());
+                    .addOnFailureListener(e -> {
+                        progressDialog.dismiss();
+                        Toast.makeText(EditProfileActivity.this, "Image upload failed", Toast.LENGTH_SHORT).show();
+                    });
         } else {
-            userDocRef.update(userUpdates)
-                    .addOnSuccessListener(unused ->
-                            Toast.makeText(EditProfileActivity.this, "Profile updated!", Toast.LENGTH_SHORT).show())
-                    .addOnFailureListener(e ->
-                            Toast.makeText(EditProfileActivity.this, "Failed to update profile", Toast.LENGTH_SHORT).show());
+            updateFirestore(userDocRef, userUpdates);
         }
+    }
+
+    private void updateFirestore(DocumentReference userDocRef, Map<String, Object> userUpdates) {
+        userDocRef.update(userUpdates)
+                .addOnSuccessListener(unused -> {
+                    progressDialog.dismiss();
+                    Toast.makeText(EditProfileActivity.this, "Profile updated!", Toast.LENGTH_SHORT).show();
+
+                    // Send result to refresh ProfileActivity
+                    Intent resultIntent = new Intent();
+                    resultIntent.putExtra("updated", true);
+                    setResult(Activity.RESULT_OK, resultIntent);
+                    finish();
+                })
+                .addOnFailureListener(e -> {
+                    progressDialog.dismiss();
+                    Toast.makeText(EditProfileActivity.this, "Failed to update profile", Toast.LENGTH_SHORT).show();
+                });
     }
 }
