@@ -1,10 +1,10 @@
 package com.example.campusplus;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -14,7 +14,7 @@ public class SplashScreen extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main); // Your splash screen layout
+        setContentView(R.layout.activity_main); // Make sure this is your splash layout
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -22,25 +22,10 @@ public class SplashScreen extends AppCompatActivity {
             return insets;
         });
 
+        // Always go to LoginActivity after 2 seconds
         new Handler().postDelayed(() -> {
-            if (isUserLoggedIn()) {
-                startActivity(new Intent(SplashScreen.this,  LoginActivity.class));
-            } else {
-                startActivity(new Intent(SplashScreen.this, NewsMainActivity.class));
-            }
+            startActivity(new Intent(SplashScreen.this, LoginActivity.class));
             finish();
-        }, 2000); // Delay for 2 seconds
-    }
-
-    private boolean isUserLoggedIn() {
-        SharedPreferences sharedPreferences = getSharedPreferences("LoginPrefs", MODE_PRIVATE);
-        String savedUsername = sharedPreferences.getString("Username", "");
-        String savedPassword = sharedPreferences.getString("Password", "");
-        return !savedUsername.isEmpty() && !savedPassword.isEmpty();
+        }, 2000); // 2 second delay
     }
 }
-
-
-
-
-
